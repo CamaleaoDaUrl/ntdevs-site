@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NTdevs</title>
+  <meta name="description" content="NTdevs - iniciativa de desenvolvimento e produtos digitais, com o ADV Agenda como produto em destaque." />
+  <style>
+    :root{
+      --bg:#0b1220;
+      --bg2:#111a2e;
+      --card:#16223d;
+      --soft:#1e2d52;
+      --text:#eef3ff;
+      --muted:#b9c5e1;
+      --accent:#6ea8ff;
+      --accent2:#7ef0c0;
+      --white:#ffffff;
+      --border:rgba(255,255,255,.12);
+      --shadow:0 20px 40px rgba(0,0,0,.28);
+      --radius:22px;
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,var(--bg),#0e1830 45%,var(--bg));
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    .container{max-width:var(--max);margin:0 auto;padding:0 20px}
+    .nav{
+      position:sticky;top:0;z-index:10;
+      backdrop-filter:blur(10px);
+      background:rgba(11,18,32,.84);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:20px;padding:16px 0;
+    }
+    .brand{font-size:1.4rem;font-weight:700}
+    .brand small{display:block;font-size:.78rem;color:var(--muted);font-weight:400}
+    .menu{display:flex;gap:18px;flex-wrap:wrap;font-size:.95rem;color:var(--muted)}
+    .hero{
+      padding:72px 0 54px;
+      background:
+        radial-gradient(circle at top left, rgba(110,168,255,.22), transparent 28%),
+        radial-gradient(circle at right center, rgba(126,240,192,.16), transparent 24%);
+      border-bottom:1px solid var(--border);
+    }
+    .hero-grid{
+      display:grid;grid-template-columns:1.2fr .9fr;gap:30px;align-items:center;
+    }
+    .eyebrow{
+      display:inline-block;padding:8px 14px;border:1px solid var(--border);
+      border-radius:999px;background:rgba(255,255,255,.04);color:var(--muted);
+      font-size:.92rem;margin-bottom:18px;
+    }
+    h1,h2,h3{line-height:1.15;margin:0 0 14px}
+    h1{font-size:clamp(2rem,5vw,4rem)}
+    h2{font-size:clamp(1.65rem,4vw,2.6rem)}
+    h3{font-size:1.28rem}
+    .lead{font-size:1.08rem;color:var(--muted);max-width:760px}
+    .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+    .btn{
+      display:inline-block;padding:14px 22px;border-radius:16px;
+      font-weight:700;border:1px solid var(--border);transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:var(--white);color:#0b1220}
+    .btn-secondary{background:rgba(255,255,255,.05);color:var(--text)}
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+      border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);
+    }
+    .hero-card{padding:28px}
+    .mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+    .mini{padding:16px;border:1px solid var(--border);border-radius:18px;background:rgba(255,255,255,.04)}
+    .mini strong{display:block;font-size:1.1rem}
+    .section{padding:72px 0}
+    .section.alt{background:rgba(255,255,255,.03);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .section-head{max-width:760px;margin-bottom:28px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+    .item{padding:24px}
+    .item p,.muted{color:var(--muted)}
+    .list{display:grid;gap:12px;padding-left:0;list-style:none;margin:0}
+    .list li{
+      background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:16px;
+      padding:14px 16px;
+    }
+    .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px}
+    .plan{padding:24px;position:relative}
+    .plan.featured{
+      background:linear-gradient(180deg,#ffffff,#e9f0ff);
+      color:#0b1220;
+      border-color:rgba(255,255,255,.8);
+    }
+    .badge{
+      display:inline-block;font-size:.85rem;font-weight:700;padding:7px 12px;border-radius:999px;
+      background:rgba(255,255,255,.08);border:1px solid var(--border);margin-bottom:16px;
+    }
+    .featured .badge{background:#0b1220;color:#fff;border:none}
+    .price{font-size:2rem;font-weight:800;margin:12px 0 8px}
+    .plan ul{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
+    .plan li{display:flex;gap:10px;align-items:flex-start}
+    .plan li span{font-weight:700}
+    .cta{
+      padding:42px 30px;text-align:center
+    }
+    .faq{display:grid;gap:14px}
+    .faq .item{padding:18px 20px}
+    footer{
+      border-top:1px solid var(--border);
+      padding:24px 0 38px;color:var(--muted);font-size:.95rem;text-align:center
+    }
+    @media (max-width: 980px){
+      .hero-grid,.grid-3,.grid-2,.plans{grid-template-columns:1fr}
+      .menu{display:none}
+      .hero{padding-top:46px}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">NTdevs<small>Tecnologia com propósito prático</small></div>
+      <nav class="menu">
+        <a href="#sobre">Sobre</a>
+        <a href="#solucoes">Soluções</a>
+        <a href="#advagenda">ADV Agenda</a>
+        <a href="#planos">Planos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Iniciativa de desenvolvimento e produtos digitais</div>
+        <h1>NTdevs cria soluções digitais com foco em utilidade, organização e inovação.</h1>
+        <p class="lead">
+          A NTdevs é uma iniciativa voltada ao desenvolvimento de sites, sistemas, aplicativos e produtos próprios,
+          transformando necessidades reais em soluções digitais objetivas e modernas.
+        </p>
+        <p class="lead">
+          Sua construção está conectada à experiência profissional ligada à Advance Informática, empresa focada em
+          suprimentos de informática, suporte ERP para sistemas empresariais e representação da HSF Software.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#advagenda">Ver produto em destaque</a>
+          <a class="btn btn-secondary" href="#contato">Falar com a NTdevs</a>
+        </div>
+      </div>
+
+      <div class="card hero-card">
+        <div class="muted">Produto em destaque da NTdevs</div>
+        <h2>ADV Agenda</h2>
+        <p class="muted">
+          Um aplicativo criado para centralizar tarefas, compromissos e controle financeiro com apoio de inteligência artificial.
+        </p>
+        <div class="mini-grid">
+          <div class="mini">
+            <strong>3 planos</strong>
+            <span class="muted">Free, Pro e Equilíbrio</span>
+          </div>
+          <div class="mini">
+            <strong>IA prática</strong>
+            <span class="muted">rotina e finanças</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Sobre a NTdevs</div>
+        <h2>Uma marca voltada à criação, desenvolvimento e evolução de produtos digitais</h2>
+        <p class="lead">
+          A NTdevs foi pensada como uma frente de desenvolvimento capaz de transformar ideias em soluções digitais com identidade própria.
+          A proposta é unir visão técnica, praticidade e leitura real do mercado para construir projetos com valor de uso e potencial de crescimento.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card item">
+          <h3>Soluções digitais com propósito</h3>
+          <p>Projetos pensados para resolver necessidades reais com foco em simplicidade, produtividade e boa experiência de uso.</p>
+        </div>
+        <div class="card item">
+          <h3>Visão prática de mercado</h3>
+          <p>A NTdevs nasce de uma vivência próxima à realidade de empresas que dependem de organização, suporte e tecnologia confiável.</p>
+        </div>
+        <div class="card item">
+          <h3>Produtos próprios e inovação</h3>
+          <p>Além de soluções sob demanda, a NTdevs também desenvolve produtos próprios com identidade, estratégia e potencial de crescimento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="solucoes" class="section alt">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <div class="eyebrow">Soluções</div>
+          <h2>O que a NTdevs pode apresentar no site</h2>
+          <p class="lead">
+            Nesta versão institucional, o site posiciona a NTdevs como uma iniciativa de tecnologia aplicada, com foco em produtos próprios e projetos digitais que resolvem problemas de forma prática.
+          </p>
+        </div>
+        <div class="card item">
+          <ul class="list">
+            <li>Desenvolvimento de landing pages e sites institucionais</li>
+            <li>Criação de aplicativos e sistemas sob medida</li>
+            <li>Protótipos e produtos digitais próprios</li>
+            <li>Soluções com foco em produtividade e organização</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <div class="card item">
+        <div class="eyebrow">Base profissional</div>
+        <h2>Advance Informática</h2>
+        <p class="lead">
+          A experiência que sustenta a NTdevs está ligada à atuação profissional junto à Advance Informática,
+          empresa focada em suprimentos de informática e suporte ERP para sistemas empresariais.
+        </p>
+      </div>
+      <div class="card item">
+        <div class="eyebrow">Representação</div>
+        <h2>HSF Software</h2>
+        <p class="lead">
+          O site também menciona de forma institucional a ligação da Advance Informática com a representação da HSF Software,
+          reforçando credibilidade e contexto de mercado sem misturar as marcas de forma confusa.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="advagenda" class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Produto em destaque</div>
+        <h2>ADV Agenda</h2>
+        <p class="lead">
+          O ADV Agenda é um aplicativo criado para organizar tarefas, compromissos e finanças em um só ambiente, com recursos de inteligência artificial que ajudam na produtividade e no equilíbrio financeiro.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card item">
+          <h3>Agenda e tarefas</h3>
+          <p>Organize compromissos e atividades em uma rotina mais clara e prática.</p>
+        </div>
+        <div class="card item">
+          <h3>Finanças em um só lugar</h3>
+          <p>Acompanhe entradas, saídas, pagamentos e categorias no mesmo aplicativo.</p>
+        </div>
+        <div class="card item">
+          <h3>IA aplicada ao dia a dia</h3>
+          <p>Receba ajuda inteligente para planejar melhor sua rotina e suas decisões financeiras.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="planos" class="section">
+    <div class="container">
+      <div class="section-head" style="text-align:center; max-width:900px; margin-inline:auto;">
+        <div class="eyebrow">Planos do ADV Agenda</div>
+        <h2>Escolha o plano ideal para cada fase da sua organização</h2>
+        <p class="lead">Do uso básico ao acompanhamento financeiro inteligente, o ADV Agenda evolui com a necessidade do usuário.</p>
+      </div>
+
+      <div class="plans">
+        <div class="card plan">
+          <div class="badge">🆓 Plano Free</div>
+          <div class="price">Grátis</div>
+          <p class="muted">Para quem quer começar a organizar a rotina de forma simples.</p>
+          <ul>
+            <li><span>✓</span> Tarefas ilimitadas no dia atual</li>
+            <li><span>✓</span> Agenda básica e calendário</li>
+            <li><span>✓</span> Chat com IA limitado</li>
+            <li><span>✓</span> Sem histórico financeiro</li>
+            <li><span>✓</span> Sem análise de IA</li>
+          </ul>
+        </div>
+
+        <div class="card plan featured">
+          <div class="badge">Recomendado</div>
+          <div class="price">R$ 14,90/mês</div>
+          <p>Plano Pro para mais liberdade de uso, mais recursos e módulo financeiro completo.</p>
+          <ul>
+            <li><span>✓</span> Tudo do Free</li>
+            <li><span>✓</span> Tarefas ilimitadas em quaisquer datas</li>
+            <li><span>✓</span> Chat com IA completo</li>
+            <li><span>✓</span> Módulo financeiro completo</li>
+            <li><span>✓</span> Histórico de pagamentos</li>
+            <li><span>✓</span> Temas extras</li>
+          </ul>
+        </div>
+
+        <div class="card plan">
+          <div class="badge">🧠 Plano Equilíbrio</div>
+          <div class="price">R$ 29,90/mês</div>
+          <p class="muted">O plano mais completo para quem quer apoio inteligente na vida financeira.</p>
+          <ul>
+            <li><span>✓</span> Tudo do Pro</li>
+            <li><span>✓</span> Análise financeira completa com IA</li>
+            <li><span>✓</span> Diagnóstico de situação</li>
+            <li><span>✓</span> Cronograma de pagamentos inteligentes</li>
+            <li><span>✓</span> Metas financeiras personalizadas</li>
+            <li><span>✓</span> Sugestões de corte de gastos</li>
+            <li><span>✓</span> Impacto na qualidade de vida</li>
+            <li><span>✓</span> Recomendações com criação automática de tarefas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="section">
+    <div class="container">
+      <div class="card cta">
+        <div class="eyebrow">Próximo passo</div>
+        <h2>Publicar a NTdevs e apresentar o ADV Agenda com clareza</h2>
+        <p class="lead" style="margin-inline:auto;max-width:780px;">
+          Esta estrutura foi pensada para servir como site principal da NTdevs, reforçar a base profissional ligada à Advance Informática e destacar o ADV Agenda como principal produto atual.
+        </p>
+        <div class="actions" style="justify-content:center;">
+          <a class="btn btn-primary" href="#planos">Ver planos do app</a>
+          <a class="btn btn-secondary" href="#sobre">Conhecer a NTdevs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div>NTdevs • iniciativa de desenvolvimento e produtos digitais</div>
+      <div>ADV Agenda como produto em destaque • contexto profissional ligado à Advance Informática</div>
+    </div>
+  </footer>
+</body>
+</html>
