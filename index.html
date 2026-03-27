@@ -1,47 +1,559 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://base44.com/logo_v2.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="manifest" href="/manifest.json" />
-    <title>Base44 APP</title>
-    <script type="module" crossorigin src="/assets/index-CGm5Ub92.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-C0A25ejQ.css">
-    <script type="module">
-if (window.self === window.top) {
-  let lastPath = "";
-  function getPageNameFromPath(path) {
-    const segments = path.split("/").filter(Boolean);
-    return segments[0] || null;
-  }
-  function trackPageView() {
-    const path = window.location.pathname;
-    if (path === lastPath) return;
-    lastPath = path;
-    const pageName = getPageNameFromPath(path) || "home";
-    const appId = "";
-    if (!appId) return;
-    fetch(`/app-logs/${appId}/log-user-in-app/${pageName}`, {
-      method: "POST",
-    }).catch(() => {});
-  }
-  const originalPushState = history.pushState.bind(history);
-  history.pushState = function (...args) {
-    originalPushState(...args);
-    trackPageView();
-  };
-  const originalReplaceState = history.replaceState.bind(history);
-  history.replaceState = function (...args) {
-    originalReplaceState(...args);
-    trackPageView();
-  };
-  window.addEventListener("popstate", trackPageView);
-  trackPageView();
-}
-</script>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NTdevs | Advance Informática</title>
+  <meta name="description" content="NTdevs é a frente de desenvolvimento da Advance Informática. Conheça o ADV Agenda, nossos serviços remotos e a venda de produtos de informática em Rondônia." />
+  <style>
+    :root{
+      --bg:#08111e;
+      --bg-soft:#0c1730;
+      --card:#0d1f3f;
+      --card-2:#112a55;
+      --line:rgba(255,255,255,.12);
+      --text:#edf4ff;
+      --muted:#b7c6e3;
+      --purple:#8b47ff;
+      --purple-2:#6a35f7;
+      --green:#39dfa8;
+      --green-soft:rgba(57,223,168,.12);
+      --blue:#77abff;
+      --red:#ff6d7e;
+      --yellow:#ffd55a;
+      --radius:24px;
+      --shadow:0 20px 50px rgba(0,0,0,.34);
+      --max:1160px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(119,171,255,.16), transparent 24%),
+        radial-gradient(circle at top right, rgba(139,71,255,.15), transparent 24%),
+        linear-gradient(180deg, var(--bg), #0a1630 38%, var(--bg));
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    .container{max-width:var(--max);margin:0 auto;padding:0 20px}
+    .nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(8,17,30,.84);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:18px;padding:16px 0;
+    }
+    .brand{
+      font-size:1.4rem;font-weight:700;letter-spacing:.2px;
+    }
+    .brand small{
+      display:block;margin-top:2px;color:var(--muted);font-size:.8rem;font-weight:400;
+    }
+    .menu{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.95rem}
+    .menu a:hover{color:#fff}
+    .hero{
+      padding:80px 0 56px;
+      border-bottom:1px solid var(--line);
+    }
+    .hero-grid{
+      display:grid;grid-template-columns:1.18fr .92fr;gap:28px;align-items:center;
+    }
+    .pill,.eyebrow{
+      display:inline-flex;align-items:center;
+      padding:8px 14px;border:1px solid var(--line);border-radius:999px;
+      background:rgba(255,255,255,.04);color:var(--blue);font-size:.9rem;font-weight:700;
+    }
+    .eyebrow{font-size:.84rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px}
+    h1,h2,h3{line-height:1.14;margin:0 0 14px}
+    h1{font-size:clamp(2.2rem,5vw,4.15rem)}
+    h2{font-size:clamp(1.7rem,4vw,2.8rem)}
+    h3{font-size:1.16rem}
+    .lead{font-size:1.07rem;color:var(--muted);max-width:760px}
+    .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;min-height:50px;
+      padding:0 22px;border-radius:16px;border:1px solid var(--line);
+      font-weight:700;transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple-2));border:none}
+    .btn-secondary{background:rgba(255,255,255,.04)}
+    .btn-outline{background:transparent}
+    .surface{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .hero-card{padding:28px}
+    .mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+    .mini{
+      padding:16px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--line)
+    }
+    .mini strong{display:block;font-size:1.05rem}
+    .section{padding:76px 0}
+    .section.alt{
+      background:rgba(255,255,255,.03);
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+    }
+    .section-head{max-width:820px;margin-bottom:30px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .card{padding:24px}
+    .muted,.card p,.card li,.notice p{color:var(--muted)}
+    .list{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+    .list li{
+      padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line)
+    }
+    .notice{
+      margin-top:18px;padding:14px 16px;border-radius:16px;
+      background:var(--green-soft);border:1px solid rgba(57,223,168,.22);color:#ddfff3
+    }
+    .service{
+      padding:24px;height:100%;
+    }
+    .service .badge{
+      display:inline-flex;padding:6px 10px;border-radius:999px;font-size:.8rem;font-weight:700;
+      background:rgba(255,255,255,.05);border:1px solid var(--line);margin-bottom:14px
+    }
+    .phones{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px
+    }
+    .phone{
+      padding:10px;border-radius:26px;background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid var(--line);box-shadow:var(--shadow)
+    }
+    .phone img{border-radius:20px;background:#08111f}
+    .caption{margin-top:10px;font-size:.9rem;color:var(--muted);text-align:center}
+    .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:28px}
+    .plan{padding:26px}
+    .plan.featured{
+      background:linear-gradient(180deg,#ffffff,#e9f0ff);
+      color:#091120;border-color:rgba(255,255,255,.85)
+    }
+    .plan.featured .muted{color:#45526b}
+    .tag{
+      display:inline-flex;padding:7px 12px;border-radius:999px;font-size:.86rem;font-weight:700;
+      background:rgba(255,255,255,.06);border:1px solid var(--line);margin-bottom:16px
+    }
+    .plan.featured .tag{background:#091120;color:#fff;border:none}
+    .price{font-size:2rem;font-weight:800;margin:10px 0 8px}
+    .plan ul{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
+    .plan li{display:flex;gap:10px;align-items:flex-start}
+    .plan li span{font-weight:700}
+    .rondonia{
+      display:grid;grid-template-columns:1fr 1fr;gap:22px
+    }
+    .stats{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px
+    }
+    .stat{padding:16px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+    .stat strong{display:block;font-size:1.55rem;margin-bottom:4px}
+    .faq{display:grid;gap:14px}
+    .cta{text-align:center;padding:38px 26px}
+    footer{
+      border-top:1px solid var(--line);
+      text-align:center;color:var(--muted);font-size:.95rem;
+      padding:24px 0 38px;
+    }
+    @media (max-width:1040px){
+      .hero-grid,.grid-3,.grid-2,.plans,.rondonia,.stats{grid-template-columns:1fr}
+      .phones{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:760px){
+      .menu{display:none}
+      .hero{padding-top:52px}
+      .phones{grid-template-columns:1fr}
+      .actions{flex-direction:column}
+      .btn{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">NTdevs<small>frente de desenvolvimento da Advance Informática</small></div>
+      <nav class="menu">
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#produtos">Produtos</a>
+        <a href="#planos">Planos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="pill">NTdevs + Advance Informática</div>
+        <h1>Apresentação institucional da NTdevs e da Advance Informática em um só lugar.</h1>
+        <p class="lead">
+          A NTdevs pertence à Advance Informática e representa sua frente de desenvolvimento e produtos digitais.
+          Já a Advance Informática atua com suporte, atendimento remoto, soluções práticas para o dia a dia e venda de produtos de informática.
+        </p>
+        <p class="lead">
+          Este domínio principal funciona como a apresentação conjunta da NTdevs e da Advance Informática.
+          Em uma próxima etapa, ele poderá redirecionar para o portal principal da Advance.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#produtos">Conhecer o ADV Agenda</a>
+          <a class="btn btn-secondary" href="#servicos">Ver serviços da Advance</a>
+          <a class="btn btn-outline" href="https://agendaadv.ntdevs.online">Abrir aplicativo</a>
+        </div>
+      </div>
+
+      <div class="surface hero-card">
+        <div class="muted">Destaques atuais</div>
+        <h2>Organização, suporte remoto e soluções digitais</h2>
+        <div class="mini-grid">
+          <div class="mini">
+            <strong>ADV Agenda</strong>
+            <span class="muted">produto digital da NTdevs</span>
+          </div>
+          <div class="mini">
+            <strong>Suporte remoto</strong>
+            <span class="muted">atendimento via AnyDesk para todo o Brasil</span>
+          </div>
+          <div class="mini">
+            <strong>Atendimento técnico</strong>
+            <span class="muted">drivers, rede, impressoras e diagnósticos</span>
+          </div>
+          <div class="mini">
+            <strong>Produtos em RO</strong>
+            <span class="muted">venda de informática para todo o estado</span>
+          </div>
+        </div>
+        <div class="notice">
+          <p><strong>Importante:</strong> os planos do ADV Agenda exibidos neste site são apenas informativos. A contratação e a gestão da assinatura são realizadas exclusivamente dentro do aplicativo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Sobre</div>
+        <h2>NTdevs como frente digital, Advance Informática como base institucional e operacional</h2>
+        <p class="lead">
+          A NTdevs foi estruturada como a frente de desenvolvimento da Advance Informática, com foco em sites, sistemas,
+          aplicativos e produtos próprios. A Advance Informática complementa essa base com suporte técnico, atendimento remoto
+          e soluções práticas para clientes em diferentes necessidades.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="surface card">
+          <h3>NTdevs</h3>
+          <p>Responsável pela criação de soluções digitais, projetos web e produtos próprios, com o ADV Agenda como principal produto em destaque neste momento.</p>
+        </div>
+        <div class="surface card">
+          <h3>Advance Informática</h3>
+          <p>Atuação em suporte ERP, atendimento técnico, serviços remotos e soluções de informática voltadas a clientes que precisam de agilidade e apoio prático.</p>
+        </div>
+        <div class="surface card">
+          <h3>Domínio principal</h3>
+          <p>O objetivo atual do domínio é apresentar a NTdevs e a Advance Informática no mesmo ambiente, deixando clara a ligação institucional entre as duas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos" class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Serviços da Advance Informática</div>
+        <h2>Atendimento remoto e soluções práticas para clientes em todo o Brasil</h2>
+        <p class="lead">
+          Os serviços abaixo são oferecidos pela Advance Informática, com foco em suporte remoto, ajustes técnicos
+          e diagnósticos que possam agilizar a solução do problema mesmo quando o cliente precisar de apoio local.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="surface service">
+          <div class="badge">AnyDesk</div>
+          <h3>Suporte remoto para todo o Brasil</h3>
+          <p>Atendimento remoto via AnyDesk para correções, ajustes, verificações e suporte técnico em diferentes cenários.</p>
+        </div>
+        <div class="surface service">
+          <div class="badge">Windows</div>
+          <h3>Ativação de Windows</h3>
+          <p>Auxílio em processos de ativação e regularização do ambiente Windows, conforme a necessidade do cliente.</p>
+        </div>
+        <div class="surface service">
+          <div class="badge">Rede</div>
+          <h3>Compartilhamento de impressoras</h3>
+          <p>Configuração de impressoras compartilhadas em rede para facilitar o uso entre computadores e setores.</p>
+        </div>
+        <div class="surface service">
+          <div class="badge">Periféricos</div>
+          <h3>Instalação de drivers</h3>
+          <p>Instalação e ajuste de drivers para impressoras, leitores, balanças, periféricos e outros dispositivos.</p>
+        </div>
+        <div class="surface service">
+          <div class="badge">Diagnóstico</div>
+          <h3>Análise para técnicos locais</h3>
+          <p>Diagnósticos remotos com relatório e orientação para que o cliente possa encaminhar o equipamento a um técnico local quando necessário.</p>
+        </div>
+        <div class="surface service">
+          <div class="badge">ERP</div>
+          <h3>Apoio técnico e operacional</h3>
+          <p>Suporte relacionado ao ambiente de trabalho e à operação do cliente, com foco em produtividade e continuidade do atendimento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container rondonia">
+      <div class="surface card">
+        <div class="eyebrow">Produtos em Rondônia</div>
+        <h2>Venda de produtos de informática para todo o estado</h2>
+        <p class="lead">
+          A Advance Informática também pode atender clientes de todo o estado de Rondônia com a venda de produtos de informática.
+        </p>
+        <ul class="list" style="margin-top:16px;">
+          <li>Atendimento para diferentes cidades do estado</li>
+          <li>Venda de itens e soluções de informática conforme disponibilidade</li>
+          <li>Frete por conta do comprador</li>
+        </ul>
+      </div>
+      <div class="surface card">
+        <div class="eyebrow">Posicionamento</div>
+        <h2>Site mais claro e organizado</h2>
+        <p class="lead">
+          Com essa estrutura, o site principal passa a mostrar:
+        </p>
+        <ul class="list" style="margin-top:16px;">
+          <li>NTdevs como frente de desenvolvimento da Advance Informática</li>
+          <li>Advance Informática como base de serviços e atendimento</li>
+          <li>ADV Agenda como produto digital em destaque</li>
+          <li>Serviços remotos e produtos apresentados no mesmo domínio principal</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="produtos" class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Produto digital em destaque</div>
+        <h2>ADV Agenda</h2>
+        <p class="lead">
+          O ADV Agenda é o principal produto digital da NTdevs. Ele foi criado para reunir organização de tarefas,
+          agenda, controle financeiro e inteligência artificial em um só ambiente, com foco em produtividade e clareza financeira.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="surface card">
+          <h3>Rotina e tarefas</h3>
+          <p>Criação de tarefas, lembretes e compromissos com interface amigável, visão diária e apoio por voz para tornar o processo mais rápido.</p>
+        </div>
+        <div class="surface card">
+          <h3>Financeiro integrado</h3>
+          <p>Registro de receitas e despesas, histórico financeiro, gráficos, filtros e visão clara do que entra e sai ao longo do tempo.</p>
+        </div>
+        <div class="surface card">
+          <h3>IA aplicada ao dia a dia</h3>
+          <p>Classificação com IA, diagnósticos, cronogramas de pagamento, alertas financeiros inteligentes e recursos avançados no plano Equilíbrio.</p>
+        </div>
+      </div>
+
+      <div class="phones">
+        <div class="phone">
+          <img src="assets/hoje.png" alt="Tela Hoje do ADV Agenda" />
+          <div class="caption">Hoje</div>
+        </div>
+        <div class="phone">
+          <img src="assets/calendario.png" alt="Tela Calendário do ADV Agenda" />
+          <div class="caption">Calendário</div>
+        </div>
+        <div class="phone">
+          <img src="assets/financeiro.png" alt="Tela Financeira do ADV Agenda" />
+          <div class="caption">Financeiro</div>
+        </div>
+        <div class="phone">
+          <img src="assets/chat.png" alt="Assistente do ADV Agenda" />
+          <div class="caption">Assistente</div>
+        </div>
+      </div>
+
+      <div class="notice">
+        <p><strong>Acesso ao aplicativo:</strong> o ADV Agenda pode ser aberto em <strong>agendaadv.ntdevs.online</strong>. A assinatura e a liberação dos planos acontecem apenas dentro do app.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="planos" class="section">
+    <div class="container">
+      <div class="section-head" style="text-align:center;max-width:900px;margin-inline:auto;">
+        <div class="eyebrow">Planos do ADV Agenda</div>
+        <h2>Planos exibidos no site apenas para apresentação</h2>
+        <p class="lead">A contratação, a gestão da assinatura e a liberação dos recursos são realizadas exclusivamente dentro do aplicativo.</p>
+      </div>
+
+      <div class="plans">
+        <div class="surface plan">
+          <div class="tag">🆓 Free</div>
+          <div class="price">Grátis</div>
+          <p class="muted">Ideal para começar a organizar o dia a dia e testar o app.</p>
+          <ul>
+            <li><span>✓</span> Até 30 tarefas por mês</li>
+            <li><span>✓</span> 3 usos de voz por mês</li>
+            <li><span>✓</span> Até 10 lançamentos financeiros por mês</li>
+            <li><span>✓</span> Histórico do mês atual</li>
+            <li><span>✓</span> Tema padrão</li>
+          </ul>
+        </div>
+
+        <div class="surface plan featured">
+          <div class="tag">Recomendado</div>
+          <div class="price">Pro</div>
+          <p class="muted">Organização e controle financeiro sem barreiras.</p>
+          <ul>
+            <li><span>✓</span> Tarefas, voz e lançamentos ilimitados</li>
+            <li><span>✓</span> Todo o histórico financeiro</li>
+            <li><span>✓</span> Lembretes e filtros avançados</li>
+            <li><span>✓</span> Gráficos de análise</li>
+            <li><span>✓</span> Classificação com IA</li>
+            <li><span>✓</span> Temas exclusivos</li>
+          </ul>
+        </div>
+
+        <div class="surface plan">
+          <div class="tag">🧠 Equilíbrio</div>
+          <div class="price">Premium</div>
+          <p class="muted">IA financeira avançada para análise e decisão.</p>
+          <ul>
+            <li><span>✓</span> Tudo do Pro</li>
+            <li><span>✓</span> Diagnóstico financeiro com IA</li>
+            <li><span>✓</span> Classificação de urgência das contas</li>
+            <li><span>✓</span> Cronograma de pagamento personalizado</li>
+            <li><span>✓</span> Metas financeiras guiadas por IA</li>
+            <li><span>✓</span> Sugestões de redução de gastos</li>
+            <li><span>✓</span> Alertas preventivos e integração via WhatsApp</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="surface stat">
+          <strong>PWA</strong>
+          <span class="muted">instalável e acessível pela web</span>
+        </div>
+        <div class="surface stat">
+          <strong>IA</strong>
+          <span class="muted">aplicada à rotina e às finanças</span>
+        </div>
+        <div class="surface stat">
+          <strong>App</strong>
+          <span class="muted">acesso direto pelo subdomínio do projeto</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Plano Equilíbrio em destaque</div>
+        <h2>Diagnóstico, lançamentos e visão financeira mais estratégica</h2>
+        <p class="lead">
+          O módulo Equilíbrio amplia o controle financeiro com leitura da situação atual, comparação entre receita e despesas,
+          diagnóstico mais profundo e ferramentas que ajudam o usuário a priorizar contas e entender melhor sua realidade.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="surface card">
+          <h3>O que o usuário encontra</h3>
+          <ul class="list" style="margin-top:16px;">
+            <li>Receita, despesa e saldo consolidados</li>
+            <li>Diagnóstico financeiro com IA</li>
+            <li>Comparação entre receita e despesas</li>
+            <li>Aba de lançamentos para entradas e saídas</li>
+            <li>Controle por categoria e status</li>
+          </ul>
+        </div>
+        <div class="surface card">
+          <h3>Valor percebido</h3>
+          <p>O Equilíbrio não se limita ao histórico financeiro. Ele atua como um recurso de apoio à decisão e também de operação do dia a dia, trazendo mais clareza sobre gastos, prioridades e planejamento.</p>
+        </div>
+      </div>
+
+      <div class="phones" style="grid-template-columns:repeat(3,1fr);">
+        <div class="phone">
+          <img src="assets/equilibrio-card.png" alt="Acesso ao módulo Equilíbrio" />
+          <div class="caption">Acesso ao Equilíbrio</div>
+        </div>
+        <div class="phone">
+          <img src="assets/equilibrio-analise.png" alt="Tela de análise do Equilíbrio" />
+          <div class="caption">Análise IA</div>
+        </div>
+        <div class="phone">
+          <img src="assets/equilibrio-lancamentos.png" alt="Tela de lançamentos do Equilíbrio" />
+          <div class="caption">Lançamentos</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <div>
+        <div class="eyebrow">Perguntas frequentes</div>
+        <h2>Organização do domínio principal</h2>
+      </div>
+      <div class="faq">
+        <div class="surface card">
+          <h3>O que o site principal apresenta hoje?</h3>
+          <p>O domínio principal apresenta a NTdevs, a Advance Informática, os serviços remotos, a venda de produtos em Rondônia e o ADV Agenda como produto digital em destaque.</p>
+        </div>
+        <div class="surface card">
+          <h3>Onde o usuário contrata os planos do app?</h3>
+          <p>No próprio aplicativo ADV Agenda. O site apenas exibe os planos para consulta.</p>
+        </div>
+        <div class="surface card">
+          <h3>Onde o app pode ser acessado?</h3>
+          <p>Pelo subdomínio agendaadv.ntdevs.online, separado do site institucional principal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="section">
+    <div class="container">
+      <div class="surface cta">
+        <div class="eyebrow">Próximo passo</div>
+        <h2>Site principal mais completo, app separado e serviços melhor apresentados</h2>
+        <p class="lead" style="max-width:820px;margin:0 auto;">
+          Esta atualização organiza o domínio principal como apresentação conjunta da NTdevs e da Advance Informática,
+          mantém o ADV Agenda como produto digital em destaque e amplia o site com serviços remotos e oferta de produtos.
+        </p>
+        <div class="actions" style="justify-content:center;">
+          <a class="btn btn-primary" href="https://agendaadv.ntdevs.online">Abrir ADV Agenda</a>
+          <a class="btn btn-secondary" href="#servicos">Ver serviços da Advance</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div>NTdevs • frente de desenvolvimento da Advance Informática</div>
+      <div>ADV Agenda como produto digital em destaque • serviços remotos e atendimento de informática</div>
+    </div>
+  </footer>
+</body>
 </html>
